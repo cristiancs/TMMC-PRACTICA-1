@@ -9,14 +9,10 @@ using namespace std;
 
 int *CalcularAoS(string filename, int *M, int *N)
 {
-
     char cstr[filename.size() + 1];
     strcpy(cstr, filename.c_str());
     FILE *in = fopen(cstr, "r");
-
     fscanf(in, "%d %d", M, N);
-
-    cout << *N << " " << *M << " " << endl;
 
     int *AoS = new int[4 * *M * *N];
 
@@ -27,20 +23,59 @@ int *CalcularAoS(string filename, int *M, int *N)
             fscanf(in, "%d", &AoS[i + (j * 4)]);
         }
     }
+    
     fclose(in);
     return AoS;
+}
+
+int *CalcularSoA(string filename, int *M, int *N)
+{
+    char cstr[filename.size() + 1];
+    strcpy(cstr, filename.c_str());
+    FILE *in = fopen(cstr, "r");
+    fscanf(in, "%d %d", M, N);
+
+    int *SoA = new int[4 * *M * *N];
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < *M * *N; j++)
+        {
+            fscanf(in, "%d", &SoA[(i * *M * *N) + j]);
+        }
+    }
+    
+    fclose(in);
+    return SoA;
 }
 
 int main(int argc, char const *argv[])
 {
 
     int M, N;
-
     int *AoS = CalcularAoS("prueba.txt", &M, &N);
-
-    for (int i = 0; i < M * N * 4; i++)
+    int *SoA = CalcularSoA("prueba.txt", &M, &N);
+    
+    for (int i = 0; i < 4; i++)
     {
-        cout << AoS[i];
+        for (int j = 0; j < M * N; ++j)
+        {
+            printf("%d ", AoS[(i * M * N) + j]);
+        }
+        printf("\n");
     }
+
+    printf("\n");
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < M * N; ++j)
+        {
+            printf("%d ", SoA[(i * M * N) + j]);
+        }
+        printf("\n");
+    }
+
+
     return 0;
 }
