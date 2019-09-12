@@ -13,10 +13,10 @@ using namespace std;
 __global__ void calcular_carga(float* iones_x, float* iones_y, float* cargas, int cantidad) {
     int tId = threadIdx.x + blockIdx.x * blockDim.x;
     
-	if(tId < 8192*8192) {
+	if(tId < 8192 * 8192) {
         
-        float x = tId%8192;
-        float y = tId/8192;
+        float x = tId % 8192;
+        float y = tId / 8192;
         
         float carga = 0;
         float distancia;
@@ -42,12 +42,12 @@ __global__ void calcular_carga_fila(float* iones_x, float* iones_y, float* carga
     
 
     if(tId < 8192) {
-        float Q_menor = cargas[tId*8192];
+        float Q_menor = cargas[tId * 8192];
         float y = tId;
         float x;
         
 
-        for (int i = tId*8192; i < tId*8192+8192; i++)  {
+        for (int i = tId*8192; i < tId * 8192 + 8192; i++)  {
             if(cargas[i] <Q_menor){
                 Q_menor = cargas[i];
                 x = i%8192;
