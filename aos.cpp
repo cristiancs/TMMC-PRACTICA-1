@@ -36,11 +36,7 @@ int main(int argc, char const *argv[])
 
     int M, N;
 
-    int *AoS = CalcularAoS("prueba.txt", &M, &N);
+    int *AoS = CalcularAoS("data.txt", &M, &N);
 
-    for (int i = 0; i < M * N * 4; i++)
-    {
-        cout << AoS[i];
-    }
     return 0;
 }
